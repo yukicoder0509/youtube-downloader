@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>YouTube Downloader</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script type="module" src="/src/scripts.js"></script>
+  </head>
+  <body>
+    <div class="w-full p-4">
+      <h1 class="text-3xl font-bold">YouTube Downloader</h1>
+      <form id="download-form" class="space-y-4 mt-4">
+        <div>
+          <label for="url">YouTube URL:</label>
+          <input
+            type="text"
+            id="url"
+            name="url"
+            required
+            class="border-zinc-400 border-1 rounded w-full max-w-2xl px-2"
+          />
+        </div>
+        <div>
+          <label for="type">Download Type:</label>
+          <select
+            id="type"
+            name="type"
+            class="border-zinc-400 border-1 rounded"
+          >
+            <option value="video">Video</option>
+            <option value="audio">Audio</option>
+          </select>
+        </div>
+        <div id="playlist-options" class="hidden">
+          <input type="checkbox" id="list" name="list" />
+          <label for="list">Download Playlist</label>
+        </div>
+        <select
+          id="download-directory"
+          name="download-directory"
+          class="border-zinc-400 border-1 rounded"
+        ></select>
+        <button
+          id="download-button"
+          type="submit"
+          class="bg-blue-500 text-white px-4 rounded hover:bg-blue-600 disabled:opacity-50"
+        >
+          Download
+        </button>
+      </form>
+      <div id="message"></div>
+    </div>
+  </body>
+</html>
