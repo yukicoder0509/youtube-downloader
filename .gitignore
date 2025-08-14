@@ -22,3 +22,6 @@ media/
 *.njsproj
 *.sln
 *.sw?
+
+# Environment Variable
+.env
