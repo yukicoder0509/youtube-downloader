@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build",
+    "build:frontendServe": "vite build --config vite.config.frontendServe.js",
+    "build:backendServe": "vite build --config vite.config.backendServe.js",
+    "build": "npm run build:frontendServe && npm run build:backendServe",
     "preview": "vite preview"
   },
   "keywords": [],

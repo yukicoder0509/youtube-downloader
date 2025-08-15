@@ -25,3 +25,6 @@ media/
 
 # Environment Variable
 .env
+
+# Frontend Build
+*dist/

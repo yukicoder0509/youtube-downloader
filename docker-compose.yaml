@@ -1,17 +1,8 @@
 name: youtube-downloader
 services:
-  backend:
-    build: ./app/backend
+  downloader:
+    build: ./
     ports:
       - "8000:8000"
     volumes:
       - "${MNT_MEDIA_DOWNLOAD_DIR}:/media"
-
-  frontend:
-    build:
-      context: ./app/frontend
-      dockerfile: Dockerfile
-      args:
-        VITE_BUILD_MODE: production
-    ports:
-      - "80:80"
