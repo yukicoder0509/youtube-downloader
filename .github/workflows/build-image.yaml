@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  Build-Push-Image:
+  Build-Push-Image-linux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -27,4 +27,6 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/youtube-downloader:latest
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/youtube-downloader:latest
