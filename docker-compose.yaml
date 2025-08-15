@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - "./media:/media"
+      - "${MNT_MEDIA_DOWNLOAD_DIR}:/media"
 
   frontend:
     build:

@@ -8,7 +8,7 @@ from media import download, DownloadRequest
 from file import scan_dir
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv("../../../.env") # for local machine development
 
 app = FastAPI()
 
