@@ -24,18 +24,18 @@ def download(request: DownloadRequest):
 
     if type == MediaType.VIDEO:
         # Download the video using yt-dlp
-        video_encoding = "bv*[vcodec=av01]+ba[acodec=opus]/bv*[vcodec=vp9]+ba[acodec=opus]/b"
+        video_encoding = "vcodec:av01,vcodec:vp9,vcodec:h264,res,fps,acodec:opus,acodec:aac,br,filesize"
         subprocess.run(cwd=dir, args=["yt-dlp", 
                                       "--ignore-config",
-                                      "--output", "%(title)s.%(ext)s", "-f", video_encoding,"--merge-output-format","mkv","--remux-video", "mkv",
+                                      "--output", "%(title)s.%(ext)s", "-f", "bv*+ba/b", "-S", video_encoding,"--merge-output-format","mkv","--remux-video", "mkv",
                                       "--embed-thumbnail", "--embed-metadata", "--write-info-json", "--write-thumbnail", "--write-subs", "--sub-langs", "zh-Hant,zh-TW,zh-Hans,zh-CN,zh,en,en-US,ja,-live_chat", "--compat-options", "no-live-chat",
                                       url])
     
     elif type == MediaType.AUDIO:
         # Download the audio using yt-dlp
-        audio_encoding = "bestaudio[acodec=opus]/bestaudio[acodec=m4a]/bestaudio"
+        audio_encoding = "acodec:opus,acodec:aac,br,filesize"
         subprocess.run(cwd=dir, args=["yt-dlp", 
                                       "--ignore-config",
-                                      "--output", "%(title)s.%(ext)s", "-f", audio_encoding, "--remux-video", "mka",
+                                      "--output", "%(title)s.%(ext)s", "-f", "ba/bestaudio", "-S", audio_encoding, "-x", "--audio-format", "m4a",
                                       "--embed-thumbnail", "--embed-metadata", "--write-info-json", "--write-thumbnail", "--write-subs", "--sub-langs", "zh-Hant,zh-TW,zh-Hans,zh-CN,zh,en,en-US,ja,-live_chat", "--compat-options", "no-live-chat",
                                       url])

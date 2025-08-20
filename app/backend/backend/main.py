@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 DIST_DIR = Path(__file__).parent / "frontend-dist"
-ENV_DIR = Path(__file__).parent.parent.parent / ".env"
+ENV_DIR = Path(__file__).parent.parent.parent.parent / ".env"
 load_dotenv(ENV_DIR) # for local machine development
 
 app = FastAPI()
