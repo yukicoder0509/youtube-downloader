@@ -4,6 +4,7 @@
 import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from starlette.responses import FileResponse
 from media import download, DownloadRequest
 from file import scan_dir
@@ -32,7 +33,11 @@ def scan(depth: int | None = None):
 @app.post("/download")
 def download_media(req: DownloadRequest):
     req.dir = os.environ["MEDIA_DOWNLOAD_DIR"] + "/" + req.dir
-    download(req)
+    try:
+        download(req)
+        return {"success": True}
+    except RuntimeError as e:
+        return JSONResponse(status_code=500, content={"success": False, "error": str(e)})
 
 
 @app.get("/{full_path:path}", include_in_schema=False)

@@ -45,5 +45,9 @@ export async function downloadMedia(url, type, directory) {
     },
     body: JSON.stringify({ url, type, dir: directory }),
   });
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || "Download failed");
+  }
+  return data;
 }

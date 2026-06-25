@@ -61,21 +61,23 @@ downloadForm.addEventListener("submit", (event) => {
   const type = document.getElementById("type").value;
   const directory = document.getElementById("download-directory").value;
 
+  const baseTitle = "YouTube Downloader";
   // Show loading animation
   const messageDiv = document.getElementById("message");
   messageDiv.innerHTML = `<div id="loading-spinner" class="flex items-center gap-2"><svg class="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>Downloading...</div>`;
   document.getElementById("download-button").disabled = true;
+  document.title = `${baseTitle} ⏳`;
 
   downloadMedia(url, type, directory)
     .then((result) => {
-      // Remove loading animation and show result
       messageDiv.innerHTML = `<span class='text-green-600'>Download complete!</span>`;
-      // Optionally, handle result details here
+      document.title = `${baseTitle} ✅`;
     })
     .catch((err) => {
       messageDiv.innerHTML = `<span class='text-red-600'>Error: ${
         err.message || err
       }</span>`;
+      document.title = `${baseTitle} ❌`;
     })
     .finally(() => {
       document.getElementById("download-button").disabled = false;
