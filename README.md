@@ -10,19 +10,25 @@
 
 ## 1. Build frontend
 
-Fill in the desier backend base URL in `app/frontend/.env`
+The frontend supports three build environments, each reading from a different env file:
 
-Then build with
+| Command | Env file | Intended use |
+|---|---|---|
+| `npm run build` / `npm run build:production` | `.env.production` | Production deployment |
+| `npm run build:preview` | `.env.preview` | Staging / preview deployment |
+| `npm run build:dev` | `.env` | Local development |
+
+Set `VITE_BACKEND_URL` in the corresponding env file before building, then run:
 
 ```bash
 cd app/frontend
 npm install
-npm run build
+npm run build:dev   # or build:preview / build:production
 ```
 
 This will emit to `app/backend/frontend-dist`. The website will later be served by backend server.
 
-Note that the backend URL will be hardcoded in the build result. So make sure to rebuild when backend URL is changed.
+Note that the backend URL will be hardcoded in the build result. So make sure to rebuild when the backend URL is changed.
 
 ## 2. Start backend server
 

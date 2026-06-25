@@ -7,7 +7,10 @@
     "dev": "vite",
     "build:frontendServe": "vite build --config vite.config.frontendServe.js",
     "build:backendServe": "vite build --config vite.config.backendServe.js",
-    "build": "npm run build:frontendServe && npm run build:backendServe",
+    "build": "npm run build:production",
+    "build:production": "vite build --mode production --config vite.config.frontendServe.js && vite build --mode production --config vite.config.backendServe.js",
+    "build:preview": "vite build --mode preview --config vite.config.frontendServe.js && vite build --mode preview --config vite.config.backendServe.js",
+    "build:dev": "vite build --mode development --config vite.config.frontendServe.js && vite build --mode development --config vite.config.backendServe.js",
     "preview": "vite preview"
   },
   "keywords": [],
