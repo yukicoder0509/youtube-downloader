@@ -27,6 +27,7 @@ def download(request: DownloadRequest):
         video_encoding = "vcodec:av01,vcodec:vp9,vcodec:h264,res,fps,acodec:opus,acodec:aac,br,filesize"
         result = subprocess.run(cwd=dir, args=["yt-dlp",
                                       "--ignore-config",
+                                      "--no-color",
                                       "--output", "%(title)s.%(ext)s", "-f", "bv*+ba/b", "-S", video_encoding,"--merge-output-format","mkv","--remux-video", "mkv",
                                       "--embed-thumbnail", "--embed-metadata", "--write-info-json", "--write-thumbnail", "--write-subs", "--sub-langs", "zh-Hant,zh-TW,zh-Hans,zh-CN,zh,en,en-US,ja,-live_chat", "--compat-options", "no-live-chat",
                                       url], capture_output=True, text=True)
@@ -36,14 +37,17 @@ def download(request: DownloadRequest):
         audio_encoding = "acodec:opus,acodec:aac,br,filesize"
         result = subprocess.run(cwd=dir, args=["yt-dlp",
                                       "--ignore-config",
+                                      "--no-color",
                                       "--output", "%(title)s.%(ext)s", "-f", "ba/bestaudio", "-S", audio_encoding, "-x", "--audio-format", "m4a",
                                       "--embed-thumbnail", "--embed-metadata", "--write-info-json", "--write-thumbnail", "--write-subs", "--sub-langs", "zh-Hant,zh-TW,zh-Hans,zh-CN,zh,en,en-US,ja,-live_chat", "--compat-options", "no-live-chat",
                                       url], capture_output=True, text=True)
     else:
         return
 
-    # yt-dlp sometimes exits with code 0 even on errors, so also scan stderr for ERROR: lines
-    error_lines = [line for line in result.stderr.splitlines() if line.startswith("ERROR:")]
+    # yt-dlp sometimes exits with code 0 even on errors, so also scan stderr for ERROR: lines.
+    # Use a substring match (not startswith) since yt-dlp can prefix lines with ANSI color
+    # codes depending on how color support is detected in the runtime environment.
+    error_lines = [line for line in result.stderr.splitlines() if "ERROR:" in line]
     if result.returncode != 0 or error_lines:
         error_output = "\n".join(error_lines) if error_lines else (result.stderr.strip() or result.stdout.strip() or "yt-dlp failed with unknown error")
         print(error_output)
