@@ -1,0 +1,10 @@
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/app/backend"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore"
+    allow:
+      - dependency-name: "yt-dlp"
